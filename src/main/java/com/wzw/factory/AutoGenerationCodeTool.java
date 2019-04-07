@@ -42,6 +42,7 @@ public class AutoGenerationCodeTool extends BaseTool{
 			ps.setString(1, schema.toUpperCase());
 			ps.setString(2, tableName.toUpperCase());
 			rs = ps.executeQuery();
+
 			while (rs.next()) {
 				colNames.add(rs.getString("column_name"));
 				colTypes.add(rs.getString("data_type"));
@@ -65,6 +66,12 @@ public class AutoGenerationCodeTool extends BaseTool{
 			e.printStackTrace();
 		}finally{
 			jdbc.closeConnection(conn);
+		}
+
+		//检验表中是否有字段
+		if (colNames.size() == 0) {
+			System.out.println(tableName+"表中没有任何字段，无法生成代码！");
+			return;
 		}
 
 		//模板
