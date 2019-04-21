@@ -3,7 +3,7 @@ package ${package}.mapper;
 import java.util.List;
 import java.util.Map;
 import com.ztesoft.bss.base.extmapper.BaseMapper;
-import ${entityPackage}.entity.${entityName};
+import ${entityPackage}.${entityName};
 
 /**
 * @ClassName: ${entityName}Mapper.java

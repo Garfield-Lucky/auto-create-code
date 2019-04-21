@@ -1,18 +1,16 @@
-package ${entityPackage}.web.controller;
+package ${package}.web.controller;
 
-import java.util.List;
 import java.util.Map;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ReqMethod;
 import org.springframework.web.bind.annotation.ReqProxy;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.ztesoft.bss.common.exception.BssException;
 import com.ztesoft.bss.common.vo.ResultVO;
 import com.ztesoft.bss.salesres.consts.ErrorConsts;
-import ${entityPackage}.entity.${entityName};
-import ${entityPackage}.service.${entityName}Service;
+import ${package}.entity.${entityName};
+import ${package}.service.${entityName}Service;
 import com.ztesoft.common.logger.ErrorCode;
 import com.ztesoft.common.logger.api.ZLogger;
 import com.ztesoft.common.logger.factory.ZLoggerFactory;
