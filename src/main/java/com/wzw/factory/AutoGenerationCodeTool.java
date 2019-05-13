@@ -1,6 +1,7 @@
 package com.wzw.factory;
 
 import com.wzw.template.TemplateClassPath;
+import com.wzw.util.ConnectionUtil;
 import com.wzw.util.FreeMarkerManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,66 +18,14 @@ public class AutoGenerationCodeTool extends BaseTool{
 	private List<String> comments;   //表字段的备注注释
 	private List<Integer> intLengths;//数据的存放长度
 
-	//获取表中的字段名称、字段类型、字段描述、字段类型长度
-	private static String sql = "SELECT TABLE_SCHEMA AS databaseName,TABLE_NAME AS tableName,COLUMN_NAME AS column_name,DATA_TYPE AS data_type,CHARACTER_MAXIMUM_LENGTH AS data_length, COLUMN_COMMENT AS comments " +
-			"from information_schema.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? ;";
-
-	//获取表名的描述信息
-	private static String tabnameSql="SELECT TABLE_NAME AS table_name,COLUMN_COMMENT AS comments from information_schema.COLUMNS where TABLE_NAME=?";
-
 	public void createCode(){
-
-		colNames=new ArrayList<String>();
-		colTypes=new ArrayList<String>();
-		comments=new ArrayList<String>();
-		intLengths=new ArrayList<Integer>();
-
-		MysqlJdbc jdbc = new MysqlJdbc();
-		Connection conn = null;
-		ResultSet rs = null;
-		try {
-
-		    conn = jdbc.getConn(); // 得到数据库连接
-			//1.获取表中的字段名称、字段类型、字段描述、字段类型长度
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, schema.toUpperCase());
-			ps.setString(2, tableName.toUpperCase());
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				colNames.add(rs.getString("column_name"));
-				colTypes.add(rs.getString("data_type"));
-				comments.add(rs.getString("comments"));
-				intLengths.add(rs.getInt("data_length"));
-			}
-			rs.close();
-			
-			//2.获取表名的描述信息
-			PreparedStatement psTabname = conn.prepareStatement(tabnameSql);
-			psTabname.setString(1, tableName.toUpperCase());
-	        rs = psTabname.executeQuery();
-			if (rs.next()) {
-				//rs.getString("table_name");
-				tableName_comments=rs.getString("comments");
-				BeanProperties.setTableNameComments("1111");
-			}
-			rs.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally{
-			jdbc.closeConnection(conn);
-		}
-
-		//检验表中是否有字段
-		if (colNames.size() == 0) {
-			System.out.println(tableName+"表中没有任何字段，无法生成代码！");
-			return;
-		}
 
 		//模板
 		Map<String,Object> freeMarkerData=new HashMap<String,Object>();
 		FreeMarkerManager freeMarker=new FreeMarkerManager();
+
+		//获取表的字段、注释、字段类型等信息
+		getTableMetaData();
 
 		//获取实体名称
 		String entityName = initcapTableName(tableName);
@@ -90,6 +39,60 @@ public class AutoGenerationCodeTool extends BaseTool{
 		//开始生成service、bo、mapper等代码
 		createCodeByEntityName(entityName, freeMarkerData, freeMarker);
 
+	}
+
+	 /**
+	  * @Description: 获取表的字段、注释、字段类型等信息
+	  *
+	  * @param
+	  * @author Created by wuzhangwei on 2019/5/13 19:10
+	  */
+	private void getTableMetaData(){
+		colNames=new ArrayList<String>();
+		colTypes=new ArrayList<String>();
+		comments=new ArrayList<String>();
+		intLengths=new ArrayList<Integer>();
+
+		ConnectionUtil jdbc = new ConnectionUtil();
+		Connection conn = null;
+		ResultSet rs = null;
+		try {
+
+			conn = jdbc.getConn(); // 得到数据库连接
+			//1.获取表中的字段名称、字段类型、字段描述、字段类型长度
+			PreparedStatement ps = conn.prepareStatement(ConnectionUtil.getMetaDataSql());
+			ps.setString(1, schema.toUpperCase());
+			ps.setString(2, tableName.toUpperCase());
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				colNames.add(rs.getString("column_name"));
+				colTypes.add(rs.getString("data_type"));
+				comments.add(rs.getString("comments"));
+				intLengths.add(rs.getInt("data_length"));
+			}
+			rs.close();
+
+			//2.获取表名的描述信息
+			PreparedStatement psTabname = conn.prepareStatement(ConnectionUtil.getTableCommentsSql());
+			psTabname.setString(1, tableName.toUpperCase());
+			rs = psTabname.executeQuery();
+			if (rs.next()) {
+				tableName_comments=rs.getString("comments");
+			}
+			rs.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			jdbc.closeConnection(conn);
+		}
+
+		//检验表中是否有字段
+		if (colNames.size() == 0) {
+			System.out.println(tableName + "表中没有任何字段，无法生成代码！");
+			System.exit(0);
+		}
 	}
 
 	 /**

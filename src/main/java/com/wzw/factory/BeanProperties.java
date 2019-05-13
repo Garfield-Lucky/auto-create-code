@@ -176,33 +176,6 @@ public class BeanProperties {
 			return false;
 		}
 	}
-	
-	/** 
-     *  
-     * bean文件扫描 
-     * 扫描指定目录下的所有java文件,生成对应的service和action,与bean同目录结构 
-     *  
-     * @param file 
-     *            需要扫描的文件 
-     */  
-    public static List<String> beanScan(File file)  
-    {  
-    	List<String> beanNameList = new ArrayList<String>();
-        if (file.exists())  
-        {  
-            if (file.isDirectory())  
-            {  
-                File[] fs = file.listFiles();  
-                for (int i = 0; i < fs.length; i++)  
-                {  
-                    File f = fs[i];  
-                    String beanName = f.getName().substring(0,f.getName().indexOf("."));
-                    beanNameList.add(beanName);
-                }  
-            }  
-        } 
-        
-        return beanNameList;
-    }
+
 	
 }

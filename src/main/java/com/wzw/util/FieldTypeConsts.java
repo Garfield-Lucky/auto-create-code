@@ -1,5 +1,10 @@
 package com.wzw.util;
 
+/**
+* @Description:  数据库字段类型常量
+* @Author: wuzhangwei
+* @Date: 2019/5/13 20:18
+*/
 public class FieldTypeConsts {
 
     public static final String INTEGER = "INTEGER";
