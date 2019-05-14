@@ -1,5 +1,7 @@
 package com.wzw.factory;
 
+import com.wzw.enums.ResultEnum;
+import com.wzw.exception.AccException;
 import com.wzw.template.TemplateClassPath;
 import com.wzw.util.ConnectionUtil;
 import com.wzw.util.FreeMarkerManager;
@@ -11,33 +13,45 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 
-public class AutoGenerationCodeTool extends BaseTool{
+public class AutoGenerationCodeTool extends BaseTool {
 
 	private List<String> colNames;   //列名数组
 	private List<String> colTypes;   //列名类型数组
 	private List<String> comments;   //表字段的备注注释
 	private List<Integer> intLengths;//数据的存放长度
 
-	public void createCode(){
+     /**
+      * @Description: 生成代码
+      *
+      * @param
+      * @author Created by wuzhangwei on 2019/5/14 20:06
+      */
+	public void createCode() {
 
-		//模板
-		Map<String,Object> freeMarkerData=new HashMap<String,Object>();
-		FreeMarkerManager freeMarker=new FreeMarkerManager();
+	    try {
+            //模板
+            Map<String,Object> freeMarkerData=new HashMap();
+            FreeMarkerManager freeMarker=new FreeMarkerManager();
 
-		//获取表的字段、注释、字段类型等信息
-		getTableMetaData();
+            //获取表的字段、注释、字段类型等信息
+            getTableMetaData();
 
-		//获取实体名称
-		String entityName = initcapTableName(tableName);
+            //获取实体名称
+            String entityName = initcapTableName(tableName);
 
-		//初始化模板数据
-		initFreeMarkerData(freeMarker, freeMarkerData, entityName);
+            //初始化模板数据
+            initFreeMarkerData(freeMarker, freeMarkerData, entityName);
 
-		//生成实体
-		createEntity(freeMarker, freeMarkerData, entityName);
+            //生成实体
+            createEntity(freeMarker, freeMarkerData, entityName);
 
-		//开始生成service、bo、mapper等代码
-		createCodeByEntityName(entityName, freeMarkerData, freeMarker);
+            //开始生成service、bo、mapper等代码
+            createCodeByEntityName(entityName, freeMarkerData, freeMarker);
+        } catch(AccException ae) {
+            ae.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
 
 	}
 
@@ -47,11 +61,11 @@ public class AutoGenerationCodeTool extends BaseTool{
 	  * @param
 	  * @author Created by wuzhangwei on 2019/5/13 19:10
 	  */
-	private void getTableMetaData(){
-		colNames=new ArrayList<String>();
-		colTypes=new ArrayList<String>();
-		comments=new ArrayList<String>();
-		intLengths=new ArrayList<Integer>();
+	private void getTableMetaData() {
+		colNames=new ArrayList();
+		colTypes=new ArrayList();
+		comments=new ArrayList();
+		intLengths=new ArrayList();
 
 		ConnectionUtil jdbc = new ConnectionUtil();
 		Connection conn = null;
@@ -65,12 +79,16 @@ public class AutoGenerationCodeTool extends BaseTool{
 			ps.setString(2, tableName.toUpperCase());
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
-				colNames.add(rs.getString("column_name"));
-				colTypes.add(rs.getString("data_type"));
-				comments.add(rs.getString("comments"));
-				intLengths.add(rs.getInt("data_length"));
-			}
+            if (rs.next()) {
+                do {
+                    colNames.add(rs.getString("column_name"));
+                    colTypes.add(rs.getString("data_type"));
+                    comments.add(rs.getString("comments"));
+                    intLengths.add(rs.getInt("data_length"));
+                } while (rs.next());
+            } else {
+                throw new AccException(ResultEnum.TABLE_NOT_EXIST);
+            }
 			rs.close();
 
 			//2.获取表名的描述信息
@@ -82,17 +100,14 @@ public class AutoGenerationCodeTool extends BaseTool{
 			}
 			rs.close();
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally{
+		} catch (AccException ae) {
+            throw new AccException(ResultEnum.ERROR.getCode(), ae.getMessage());
+        } catch (Exception e) {
+            throw new AccException(ResultEnum.ERROR.getCode(), e.getMessage());
+		} finally{
 			jdbc.closeConnection(conn);
 		}
 
-		//检验表中是否有字段
-		if (colNames.size() == 0) {
-			System.out.println(tableName + "表中没有任何字段，无法生成代码！");
-			System.exit(0);
-		}
 	}
 
 	 /**
@@ -101,7 +116,7 @@ public class AutoGenerationCodeTool extends BaseTool{
 	  * @param
 	  * @author Created by wuzhangwei on 2019/3/23 13:33
 	  */
-	private  void initFreeMarkerData(FreeMarkerManager freeMarker, Map<String,Object> freeMarkerData, String entityName){
+	private  void initFreeMarkerData(FreeMarkerManager freeMarker, Map<String,Object> freeMarkerData, String entityName) {
 
 		// 获取当前日期
 		String createTime = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
@@ -134,7 +149,7 @@ public class AutoGenerationCodeTool extends BaseTool{
 	 * @param FreeMarkerManager freeMarker
 	 * @author Created by wuzhangwei on 2019/3/21 15:57
 	 */
-	private void createEntity(FreeMarkerManager freeMarker, Map<String,Object> freeMarkerData, String entityName){
+	private void createEntity(FreeMarkerManager freeMarker, Map<String,Object> freeMarkerData, String entityName) {
 
 		String filePath=path+"/"+entityPackage.replace(".", "/");
 		System.out.println("实体存放路径:"+filePath);
@@ -153,7 +168,7 @@ public class AutoGenerationCodeTool extends BaseTool{
   * @param FreeMarkerManager freeMarker
   * @author Created by wuzhangwei on 2019/3/21 15:57
   */
-	private void createCodeByEntityName(String entityName, Map<String,Object> freeMarkerData, FreeMarkerManager freeMarker){
+	private void createCodeByEntityName(String entityName, Map<String,Object> freeMarkerData, FreeMarkerManager freeMarker) {
 
 		Map<String,String> beanMap = new HashMap<String,String>();
 		beanMap.put("web.controller","Controller.java");

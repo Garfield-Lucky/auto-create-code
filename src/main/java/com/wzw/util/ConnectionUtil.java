@@ -1,5 +1,7 @@
 package com.wzw.util;
 
+import com.wzw.enums.ResultEnum;
+import com.wzw.exception.AccException;
 import com.wzw.factory.DriverFactory;
 
 import java.sql.*;
@@ -37,7 +39,6 @@ public class ConnectionUtil {
 		}
 	}
 
-
 	public ResultSet executeQuery(String sql) {
 		rs = null;
 		try {
@@ -58,7 +59,6 @@ public class ConnectionUtil {
 			e.printStackTrace();
 		}
 	}
-
 
 	public void closeConnection(Connection con) {
 		try {
@@ -87,7 +87,7 @@ public class ConnectionUtil {
 		if (dbUrl.contains("oracle")) {
 			return METADATA_ORACLE;
 		}
-		return null;
+		throw new AccException(ResultEnum.SQL_NOT_EXIST);
 	}
 
 	 /**
@@ -103,7 +103,7 @@ public class ConnectionUtil {
 		if (dbUrl.contains("oracle")) {
 			return COMMENTS_ORACLE;
 		}
-		return null;
+		throw new AccException(ResultEnum.SQL_NOT_EXIST);
 	}
 
 	//测试数据库连接

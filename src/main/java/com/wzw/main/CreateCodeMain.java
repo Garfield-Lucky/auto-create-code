@@ -14,10 +14,10 @@ public class CreateCodeMain {
 	 * @throws SQLException 
 	 * @author wzw
 	 */
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 
 		BeanProperties.setPackage("com.ztesoft.bss.salesres");//包名
-		BeanProperties.setTableName("MKT_RES_TERM_CONTACT_DETAIL");//数据库表名
+		BeanProperties.setTableName("sys_user");//数据库表名
 		BeanProperties.setSchema("springboot");//数据库名称
  		BeanProperties.setPath("D:/java");//生成的类存放的路径
  		BeanProperties.setAuthor("wuzhangwei");//代码生成者
