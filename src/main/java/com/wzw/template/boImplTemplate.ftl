@@ -90,7 +90,7 @@ public class ${entityName}BoImpl implements ${entityName}Bo {
 	public int add${entityName}(${entityName} ${instanceName}) throws Exception{
 		int flag = 0;
 		try {
-			Long ${instanceName}Id = DbUtil.getSequenceNumber("BRAND", "ID");
+			Long ${instanceName}Id = DbUtil.getSequenceNumber(${tableName}, "ID");
 			${instanceName}.set${entityName}Id(${instanceName}Id);
 			${instanceName}.setCreateStaff(ContextUtil.getUserId());
 			flag = ${instanceName}Mapper.insertSelective(${instanceName});

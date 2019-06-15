@@ -23,7 +23,7 @@ public interface ${entityName}Bo {
     public PageInfo<${entityName}> qry${entityName}List(Map<String,Object> params) throws Exception;
 
     /**
-    * @Description: 通过id查询终端品牌
+    * @Description: 通过id查询
     * @param ${instanceName}
     * @return ${entityName}
     * @author Created by ${author} on ${now}
@@ -31,7 +31,7 @@ public interface ${entityName}Bo {
     ${entityName} qry${entityName}ById(${entityName} ${instanceName}) throws Exception;
 
     /**
-    * @Description: 修改终端品牌
+    * @Description: 修改
     * @param ${instanceName}
     * @return int
     * @author Created by ${author} on ${now}
@@ -39,7 +39,7 @@ public interface ${entityName}Bo {
     int update${entityName}ById(${entityName} ${instanceName}) throws Exception;
 
     /**
-    * @Description: 根据id删除终端品牌
+    * @Description: 根据id删除
     * @param ${instanceName}
     * @return int
     * @author Created by ${author} on ${now}
@@ -47,10 +47,10 @@ public interface ${entityName}Bo {
     int remove${entityName}ById(${entityName} ${instanceName}) throws Exception;
 
     /**
-    * @Description: 新增终端品牌
+    * @Description: 新增
     * @param ${instanceName}
     * @return int
-    * @author Created by wuzhangwei on ${now}
+    * @author Created by ${author} on ${now}
     */
     int add${entityName}(${entityName} ${instanceName}) throws Exception;
 
