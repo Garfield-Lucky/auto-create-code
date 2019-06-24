@@ -13,87 +13,86 @@ import java.util.List;
 */
 public class BeanProperties {
 
-	//实体bean的包名
-	private static String _package;
+	//业务代码的包名
+	private static String codePackage;
 
 	//实体bean的包名
-	private  static String _entityPackage;
+	private  static String entityPackage;
 
 	//生成代码人员
-	private  static String _author;
+	private  static String author;
 
 	//大小写都可以，表名
-	private  static String _tableName;
+	private  static String tableName;
 
 	//代码生成后存放的位置
-	private  static String _path;
+	private  static String path;
 
     //数据库名称
-	private static String _schema;
+	private static String schema;
 
 	//由其它地方自动设置
-	private static String _tableNameComments;
+	private static String tableNameComments;
 	
 	public static String getPackage() {
-		return _package;
+		return codePackage;
 	}
 
-	public static void setPackage(String $package) {
-		_package = $package;
-		_entityPackage = $package + ".entity";
+	public static void setPackage(String codePackageValue) {
+		codePackage = codePackageValue;
+		entityPackage = codePackage + ".entity";
 	}
 
 	public static String getEntityPackage(){
-		return _entityPackage;
+		return entityPackage;
 	}
 
 	public static String getTableName() {
-		return _tableName;
+		return tableName;
 	}
 
-	public static void setTableName(String tableName) {
-		_tableName = tableName;
+	public static void setTableName(String tableNameValue) {
+		tableName = tableNameValue;
 	}
 
 	public static String getTableNameComments() {
-		return _tableNameComments;
+		return tableNameComments;
 	}
 
-	public static void setTableNameComments(String tableNameComments) {
-		_tableNameComments = tableNameComments;
+	public static void setTableNameComments(String tableNameCommentsValue) {
+		tableNameComments = tableNameCommentsValue;
 	}
 
 	public static String getPath() {
-		return _path;
+		return path;
 	}
 
-	public static void setPath(String path) {
-		_path = path;
+	public static void setPath(String pathValue) {
+		path = pathValue;
 	}
 
 	public static String getAuthor() {
-		return _author;
+		return author;
 	}
 
-	public static void setAuthor(String author) {
-		_author = author;
+	public static void setAuthor(String authorValue) {
+		author = authorValue;
 	}
 
-	public static void setSchema(String schema){
-		_schema = schema;
+	public static void setSchema(String schemaValue){
+		schema = schemaValue;
 	}
 
 	public static String getSchema(){
-		return _schema;
+		return schema;
 	}
 
 	public static String getCaptureName(String name) {
-        char[] cs=name.toCharArray();
-        if(cs[0] >= 'a' && cs[0] <= 'z')
-        {
+        char[] cs = name.toCharArray();
+        if (cs[0] >= 'a' && cs[0] <= 'z') {
              return String.valueOf(cs);
-        }else{
-        	 cs[0]+=32;
+        } else {
+        	 cs[0] += 32;
              return String.valueOf(cs);
         }
 	}
@@ -108,15 +107,15 @@ public class BeanProperties {
 
 		if (checkNumber(fileType)) {
 			return "Long";
-		}else if (checkString(fileType)){
+		} else if (checkString(fileType)) {
 			return "String";
 		} else if (checkDate(fileType)) {
 			return "Date";
-		} else if(FieldTypeConsts.CLOB.equalsIgnoreCase(fileType)){
+		} else if (FieldTypeConsts.CLOB.equalsIgnoreCase(fileType)) {
 			return "CLOB";
-		} else if(FieldTypeConsts.TEXT.equalsIgnoreCase(fileType)){
+		} else if (FieldTypeConsts.TEXT.equalsIgnoreCase(fileType)) {
 			return "TEXT";
-		}else{
+		} else {
 			return null;
 		}
 
@@ -170,7 +169,7 @@ public class BeanProperties {
 
 		if (FieldTypeConsts.DATE.equalsIgnoreCase(fieldType) ||
 			FieldTypeConsts.TIMESTAMP.equalsIgnoreCase(fieldType) ||
-			FieldTypeConsts.DATETIME.equalsIgnoreCase(fieldType)){
+			FieldTypeConsts.DATETIME.equalsIgnoreCase(fieldType)) {
 			return true;
 		} else {
 			return false;

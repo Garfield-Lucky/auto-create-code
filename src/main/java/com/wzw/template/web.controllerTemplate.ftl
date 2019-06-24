@@ -32,13 +32,13 @@ public class ${entityName}Controller {
 
     /**
     * @Description: 列表查询
-    * @param Map<String,Object> params
+    * @param Map<String, Object> params
     * @throws Exception
     * @return PageInfo<${entityName}>
     * @author Created by ${author} on ${now}
     */
     @ReqMethod
-    public PageInfo<${entityName}> qry${entityName}List(Map<String,Object> params) {
+    public PageInfo<${entityName}> qry${entityName}List(Map<String, Object> params) {
     PageInfo<${entityName}> resultData = null;
         try {
         	resultData = ${instanceName}Service.qry${entityName}List(params);
@@ -49,7 +49,7 @@ public class ${entityName}Controller {
 	}
 
 	/**
-	* @Description:
+	* @Description: 根据主键查询
 	* @param ${instanceName}
 	* @throws Exception
 	* @return ${entityName}
@@ -68,7 +68,7 @@ public class ${entityName}Controller {
 
 
 	/**
-	* @Description:
+	* @Description: 新增
 	* @param ${instanceName}
 	* @throws Exception
 	* @return ResultVO<${entityName}>
@@ -79,7 +79,7 @@ public class ${entityName}Controller {
 		ResultVO<${entityName}> result = new ResultVO<${entityName}>();
 			try {
 				int flag = ${instanceName}Service.add${entityName}(${instanceName});
-				if(flag > 0) {
+				if (flag > 0) {
 					result.setResultCode(ErrorConsts.DEAL_SUCCESS_0.errorCode);
 					result.setResultMsg(ErrorConsts.DEAL_SUCCESS_0.errorMsg);
 				} else {
@@ -100,7 +100,7 @@ public class ${entityName}Controller {
 
 
 	/**
-	* @Description:
+	* @Description: 修改
 	* @param ${instanceName}
 	* @throws Exception
 	* @return ResultVO<${entityName}>
@@ -111,7 +111,7 @@ public class ${entityName}Controller {
 		ResultVO<${entityName}> result = new ResultVO<${entityName}>();
 			try {
 				int flag = ${instanceName}Service.update${entityName}ById(${instanceName});
-				if(flag > 0) {
+				if (flag > 0) {
 				 	result.setResultCode(ErrorConsts.DEAL_SUCCESS_0.errorCode);
 				 	result.setResultMsg(ErrorConsts.DEAL_SUCCESS_0.errorMsg);
 			    } else {
@@ -131,7 +131,7 @@ public class ${entityName}Controller {
 			}
 
 	/**
-	* @Description:
+	* @Description: 删除
 	* @param ${instanceName}
 	* @throws Exception
 	* @return ResultVO<${entityName}>

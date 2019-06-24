@@ -36,10 +36,10 @@ public class FreeMarkerManager {
 	 * @param distDir 生成目标文件的目录  不需要以 / 开头
 	 */
 	public boolean otherProcess(String modelName, String fileName,
-			String charet, Map<String,Object> freeMarkerData,String distDir){
-		try{
+			String charet, Map<String, Object> freeMarkerData, String distDir){
+		try {
 			//检查是否不存在此目录，不存在时创建目录
-			String filePathDir=creatDirs(distDir)+"/";
+			String filePathDir = creatDirs(distDir)+"/";
 
 			Template t = cfg.getTemplate(modelName);
 			Writer out = new OutputStreamWriter(new FileOutputStream(filePathDir
@@ -48,7 +48,7 @@ public class FreeMarkerManager {
 			out.close();
 
 			return true;
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			return false;
 		}

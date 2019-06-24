@@ -20,7 +20,7 @@ public interface ${entityName}Bo {
 	* @return PageInfo<${entityName}>
     * @author Created by ${author} on ${now}
     */
-    public PageInfo<${entityName}> qry${entityName}List(Map<String,Object> params) throws Exception;
+    PageInfo<${entityName}> qry${entityName}List(Map<String, Object> params) throws Exception;
 
     /**
     * @Description: 通过id查询

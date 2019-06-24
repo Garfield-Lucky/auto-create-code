@@ -10,7 +10,7 @@ package com.wzw.factory;
 public class BaseTool { 
 	
 	//包名
-	public static String _package = BeanProperties.getPackage();
+	public static String codePackage = BeanProperties.getPackage();
 
 	//代码生成后存放的路径
 	public static String path = BeanProperties.getPath();

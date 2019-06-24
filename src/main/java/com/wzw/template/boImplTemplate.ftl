@@ -2,6 +2,7 @@ package ${package}.bo.impl;
 
 import java.util.Map;
 import java.util.List;
+import java.util.Date;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class ${entityName}BoImpl implements ${entityName}Bo {
 	private ${entityName}Mapper ${instanceName}Mapper;
 
 	@Override
-	public PageInfo<${entityName}> qry${entityName}List(Map<String,Object> params) throws Exception{
+	public PageInfo<${entityName}> qry${entityName}List(Map<String, Object> params) throws Exception {
         PageHelper.startPage((int) params.get("pageIndex"), (int) params.get("pageSize"));
 		List<${entityName}> resultData = null;
 		try {
@@ -47,7 +48,7 @@ public class ${entityName}BoImpl implements ${entityName}Bo {
 	}
 
 	@Override
-	public ${entityName} qry${entityName}ById(${entityName} ${instanceName}) throws Exception{
+	public ${entityName} qry${entityName}ById(${entityName} ${instanceName}) throws Exception {
 		${entityName} resultData = null;
 		try {
 			resultData = ${instanceName}Mapper.selectByPrimaryKey(${instanceName}.get${entityName}Id());
@@ -59,10 +60,12 @@ public class ${entityName}BoImpl implements ${entityName}Bo {
 	}
 
 	@Override
-	public int update${entityName}ById(${entityName} ${instanceName}) throws Exception{
+	public int update${entityName}ById(${entityName} ${instanceName}) throws Exception {
 		int flag = 0;
 		try {
-			${instanceName}.setCreateStaff(ContextUtil.getUserId());
+			${instanceName}.setUpdateStaff(ContextUtil.getUserId());
+            ${instanceName}.setUpdateDate(new Date());
+
 			flag = ${instanceName}Mapper.updateByPrimaryKeySelective(${instanceName});
 		} catch(BssException e) {
 			LOG.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), e.getFailMsg());
@@ -75,7 +78,7 @@ public class ${entityName}BoImpl implements ${entityName}Bo {
 	}
 
 	@Override
-	public int remove${entityName}ById(${entityName} ${instanceName}) throws Exception{
+	public int remove${entityName}ById(${entityName} ${instanceName}) throws Exception {
 		int flag = 0;
 		try {
 			flag = ${instanceName}Mapper.deleteByPrimaryKey(${instanceName}.get${entityName}Id());
@@ -87,10 +90,10 @@ public class ${entityName}BoImpl implements ${entityName}Bo {
 	}
 
 	@Override
-	public int add${entityName}(${entityName} ${instanceName}) throws Exception{
+	public int add${entityName}(${entityName} ${instanceName}) throws Exception {
 		int flag = 0;
 		try {
-			Long ${instanceName}Id = DbUtil.getSequenceNumber(${tableName}, "ID");
+			Long ${instanceName}Id = DbUtil.getSequenceNumber("${tableName}", "ID");
 			${instanceName}.set${entityName}Id(${instanceName}Id);
 			${instanceName}.setCreateStaff(ContextUtil.getUserId());
 			flag = ${instanceName}Mapper.insertSelective(${instanceName});

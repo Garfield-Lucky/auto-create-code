@@ -20,6 +20,6 @@ public interface ${entityName}Mapper extends BaseMapper<${entityName}> {
     * @return List<${entityName}>
     * @author Created by ${author} on ${now}
     */
-    public List<${entityName}> qry${entityName}List(Map<String,Object> params);
+    List<${entityName}> qry${entityName}List(Map<String, Object> params);
 
 }

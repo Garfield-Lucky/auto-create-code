@@ -30,8 +30,8 @@ public class AutoGenerationCodeTool extends BaseTool {
 
 	    try {
             //模板
-            Map<String,Object> freeMarkerData=new HashMap();
-            FreeMarkerManager freeMarker=new FreeMarkerManager();
+            Map<String, Object> freeMarkerData = new HashMap();
+            FreeMarkerManager freeMarker = new FreeMarkerManager();
 
             //获取表的字段、注释、字段类型等信息
             getTableMetaData();
@@ -62,10 +62,10 @@ public class AutoGenerationCodeTool extends BaseTool {
 	  * @author Created by wuzhangwei on 2019/5/13 19:10
 	  */
 	private void getTableMetaData() {
-		colNames=new ArrayList();
-		colTypes=new ArrayList();
-		comments=new ArrayList();
-		intLengths=new ArrayList();
+		colNames = new ArrayList();
+		colTypes = new ArrayList();
+		comments = new ArrayList();
+		intLengths = new ArrayList();
 
 		ConnectionUtil jdbc = new ConnectionUtil();
 		Connection conn = null;
@@ -96,7 +96,7 @@ public class AutoGenerationCodeTool extends BaseTool {
 			psTabname.setString(1, tableName.toUpperCase());
 			rs = psTabname.executeQuery();
 			if (rs.next()) {
-				tableName_comments=rs.getString("comments");
+				tableName_comments = rs.getString("comments");
 			}
 			rs.close();
 
@@ -116,7 +116,7 @@ public class AutoGenerationCodeTool extends BaseTool {
 	  * @param
 	  * @author Created by wuzhangwei on 2019/3/23 13:33
 	  */
-	private  void initFreeMarkerData(FreeMarkerManager freeMarker, Map<String,Object> freeMarkerData, String entityName) {
+	private  void initFreeMarkerData(FreeMarkerManager freeMarker, Map<String, Object> freeMarkerData, String entityName) {
 
 		// 获取当前日期
 		String createTime = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
@@ -130,13 +130,13 @@ public class AutoGenerationCodeTool extends BaseTool {
 		//设置生成代码所需的参数
 		freeMarkerData.put("instanceName", BeanProperties.getCaptureName(entityName));
 		freeMarkerData.put("tableNameComments", tableName_comments);//表名中文解释
-		freeMarkerData.put("tableName",tableName.toUpperCase());
+		freeMarkerData.put("tableName", tableName.toUpperCase());
 		freeMarkerData.put("createPropStr", processAllAttrs());
-		freeMarkerData.put("entityPackage",entityPackage);
-		freeMarkerData.put("columnName",getColumnName());
+		freeMarkerData.put("entityPackage", entityPackage);
+		freeMarkerData.put("columnName", getColumnName());
 		freeMarkerData.put("entityName", entityName);
-		freeMarkerData.put("package",_package);
-		freeMarkerData.put("author",author);
+		freeMarkerData.put("package", codePackage);
+		freeMarkerData.put("author", author);
 		freeMarkerData.put("now", createTime);
 
 	}
@@ -145,17 +145,17 @@ public class AutoGenerationCodeTool extends BaseTool {
 	 * @Description: 生成实体
 	 *
 	 * @param String entityName
-	 * @param Map<String,Object> freeMarkerData
+	 * @param Map<String, Object> freeMarkerData
 	 * @param FreeMarkerManager freeMarker
 	 * @author Created by wuzhangwei on 2019/3/21 15:57
 	 */
-	private void createEntity(FreeMarkerManager freeMarker, Map<String,Object> freeMarkerData, String entityName) {
+	private void createEntity(FreeMarkerManager freeMarker, Map<String, Object> freeMarkerData, String entityName) {
 
-		String filePath=path+"/"+entityPackage.replace(".", "/");
-		System.out.println("实体存放路径:"+filePath);
-		boolean y=freeMarker.otherProcess("entityTemplate.ftl", entityName + ".java", "UTF-8", freeMarkerData, filePath);
+		String filePath = path + "/" + entityPackage.replace(".", "/");
+		System.out.println("实体存放路径:" + filePath);
+		boolean y = freeMarker.otherProcess("entityTemplate.ftl", entityName + ".java", "UTF-8", freeMarkerData, filePath);
 
-		if(y){
+		if (y) {
 			System.err.println("生成实体"+entityName+".java成功!");
 		}
 	}
@@ -164,26 +164,26 @@ public class AutoGenerationCodeTool extends BaseTool {
   * @Description: 根据entityName生成service、bo、mapper等代码
   *
   * @param String entityName
-  * @param Map<String,Object> freeMarkerData
+  * @param Map<String, Object> freeMarkerData
   * @param FreeMarkerManager freeMarker
   * @author Created by wuzhangwei on 2019/3/21 15:57
   */
-	private void createCodeByEntityName(String entityName, Map<String,Object> freeMarkerData, FreeMarkerManager freeMarker) {
+	private void createCodeByEntityName(String entityName, Map<String, Object> freeMarkerData, FreeMarkerManager freeMarker) {
 
-		Map<String,String> beanMap = new HashMap<String,String>();
-		beanMap.put("web.controller","Controller.java");
-		beanMap.put("service","Service.java");
-		beanMap.put("serviceImpl","ServiceImpl.java");
-		beanMap.put("bo","Bo.java");
-		beanMap.put("boImpl","BoImpl.java");
-		beanMap.put("mapper","Mapper.java");
-		beanMap.put("mapperXml","Mapper.xml");
+		Map<String, String> beanMap = new HashMap<String,String>();
+		beanMap.put("web.controller", "Controller.java");
+		beanMap.put("service", "Service.java");
+		beanMap.put("serviceImpl", "ServiceImpl.java");
+		beanMap.put("bo", "Bo.java");
+		beanMap.put("boImpl", "BoImpl.java");
+		beanMap.put("mapper", "Mapper.java");
+		beanMap.put("mapperXml", "Mapper.xml");
 
 		for (Map.Entry<String, String> entry : beanMap.entrySet()) {
-			String filePath=path+"/"+(_package+"."+entry.getKey()).replace(".", "/");
-			boolean y=freeMarker.otherProcess(entry.getKey()+"Template.ftl", entityName + entry.getValue(), "UTF-8", freeMarkerData, filePath);
+			String filePath=path+"/"+(codePackage+"."+entry.getKey()).replace(".", "/");
+			boolean y = freeMarker.otherProcess(entry.getKey()+"Template.ftl", entityName + entry.getValue(), "UTF-8", freeMarkerData, filePath);
 
-			if(y){
+			if (y) {
 				System.err.println("生成"+entityName+entry.getValue()+"成功!");
 			}
 		}
@@ -197,7 +197,7 @@ public class AutoGenerationCodeTool extends BaseTool {
 	  */
 	public static void main(String[] args) throws SQLException {
 		
-		new AutoGenerationCodeTool().createCode();
+		new AutoGenerationCodeTool(). createCode();
  
 	}
 
@@ -209,8 +209,8 @@ public class AutoGenerationCodeTool extends BaseTool {
 	 */
 	private String initcapTableName(String str) {
 
-		String word[]=str.trim().toLowerCase().split("_");
-		StringBuffer sb=new StringBuffer();
+		String word[] = str.trim().toLowerCase().split("_");
+		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < word.length; i++) {
 	        char[] ch = word[i].toCharArray();
 	        if (ch[0] >= 'a' && ch[0] <= 'z') {
@@ -230,8 +230,8 @@ public class AutoGenerationCodeTool extends BaseTool {
 	  */
 	private String initcapColName(String ColName) {
 
-		String word[]=ColName.trim().toLowerCase().split("_");
-		StringBuffer sb=new StringBuffer();
+		String word[] = ColName.trim().toLowerCase().split("_");
+		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < word.length; i++) {
 			char[] ch = word[i].toCharArray();
 			if (i > 0)
@@ -254,23 +254,23 @@ public class AutoGenerationCodeTool extends BaseTool {
 	  */
 	private String processAllAttrs() {
 
-		StringBuffer content=new StringBuffer();
-		StringBuffer idStr=new StringBuffer();
-		StringBuffer otherStr=new StringBuffer();
+		StringBuffer content = new StringBuffer();
+		StringBuffer idStr = new StringBuffer();
+		StringBuffer otherStr = new StringBuffer();
 		for (int i = 0; i < colNames.size(); i++) {
-			String attr=initcapColName(colNames.get(i));//属性，第一个字母小写
-			String dataType=BeanProperties.fieldType2JavaType(colTypes.get(i));
-			if(attr.equals("id")){
-				if(null!=comments.get(i))//字段注释
-					idStr.append("\t//"+comments.get(i)+"\r\n");
+			String attr = initcapColName(colNames.get(i));//属性，第一个字母小写
+			String dataType = BeanProperties.fieldType2JavaType(colTypes.get(i));
+			if (attr.equals("id")) {
+				if (null != comments.get(i))//字段注释
+					idStr.append("\t//" + comments.get(i) + "\r\n");
 				idStr.append("\t@Id\r\n");
 				idStr.append("\tprivate " + dataType + " "	+ attr + ";\r\n\r\n");
-			}else if(dataType.equals("CLOB") || dataType.equals("TEXT")){//String 大字段
-				if(null!=comments.get(i))//字段注释
-					otherStr.append("\t//"+comments.get(i)+" [String 大字段]\r\n");
+			} else if (dataType.equals("CLOB") || dataType.equals("TEXT")) {//String 大字段
+				if (null != comments.get(i))//字段注释
+					otherStr.append("\t//" + comments.get(i) + " [String 大字段]\r\n");
 				otherStr.append("\tprivate String "	+ attr + ";\r\n\r\n");
-			}else{
-				if(null!=comments.get(i))//字段注释
+			} else {
+				if(null != comments.get(i))//字段注释
 					otherStr.append("\t//"+comments.get(i)+"\r\n");
 				otherStr.append("\tprivate " + dataType + " "	+ attr + ";\r\n\r\n");
 			}
@@ -291,12 +291,12 @@ public class AutoGenerationCodeTool extends BaseTool {
 	  */
 	private String getColumnName() {
 
-		StringBuffer content=new StringBuffer();
+		StringBuffer content = new StringBuffer();
 		for (int i = 0; i < colNames.size(); i++) {
-			if(i == colNames.size()-1){
-				content.append("\t"+colNames.get(i));//字段名称
-			}else{
-				content.append("\t"+colNames.get(i)+",");//字段名称
+			if (i == colNames.size()-1) {
+				content.append("\t" + colNames.get(i));//字段名称
+			} else {
+				content.append("\t" + colNames.get(i) + ",");//字段名称
 				content.append("\r\n");//换行隔开
 			}
 		}
