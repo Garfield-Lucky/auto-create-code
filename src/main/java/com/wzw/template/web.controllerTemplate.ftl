@@ -25,7 +25,7 @@ import com.ztesoft.common.logger.factory.ZLoggerFactory;
 @RestController
 @ReqProxy
 public class ${entityName}Controller {
-    private static final ZLogger zlogger = ZLoggerFactory.getLogger(${entityName}Controller.class, "${instanceName}Service");
+    private static final ZLogger zlogger = ZLoggerFactory.getLogger(${entityName}Controller.class, "${instanceName}Controller");
 
     @Autowired
     ${entityName}Service ${instanceName}Service;

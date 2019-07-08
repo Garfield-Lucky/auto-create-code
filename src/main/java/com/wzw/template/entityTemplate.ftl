@@ -17,7 +17,7 @@ import lombok.Data;
 public class ${entityName} implements Serializable {
 
     private static final long serialVersionUID = 1L;
-	protected static final String tableName="${tableName}";
+	protected static final String tableName = "${tableName}";
 
 	${createPropStr}
 	
