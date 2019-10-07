@@ -25,7 +25,7 @@ import com.ztesoft.common.logger.factory.ZLoggerFactory;
 @RestController
 @ReqProxy
 public class ${entityName}Controller {
-    private static final ZLogger zlogger = ZLoggerFactory.getLogger(${entityName}Controller.class, "${instanceName}Controller");
+    private static final ZLogger ZLOGGER = ZLoggerFactory.getLogger(${entityName}Controller.class, "${instanceName}Controller");
 
     @Autowired
     ${entityName}Service ${instanceName}Service;
@@ -33,7 +33,6 @@ public class ${entityName}Controller {
     /**
     * @Description: 列表查询
     * @param Map<String, Object> params
-    * @throws Exception
     * @return PageInfo<${entityName}>
     * @author Created by ${author} on ${now}
     */
@@ -43,7 +42,7 @@ public class ${entityName}Controller {
         try {
         	resultData = ${instanceName}Service.qry${entityName}List(params);
         } catch(Exception e) {
-        	zlogger.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), "列表查询失败！" + e.getMessage());
+        	ZLOGGER.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), "列表查询失败！" + e.getMessage());
         }
         return resultData;
 	}
@@ -51,7 +50,6 @@ public class ${entityName}Controller {
 	/**
 	* @Description: 根据主键查询
 	* @param ${instanceName}
-	* @throws Exception
 	* @return ${entityName}
 	* @author Created by ${author} on ${now}
 	*/
@@ -61,7 +59,7 @@ public class ${entityName}Controller {
 		try {
 			resultData = ${instanceName}Service.qry${entityName}ById(${instanceName});
 		} catch(Exception e) {
-			zlogger.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), "查询失败！" + e.getMessage());
+			ZLOGGER.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), "查询失败！" + e.getMessage());
 		}
 		return resultData;
 	}
@@ -70,12 +68,11 @@ public class ${entityName}Controller {
 	/**
 	* @Description: 新增
 	* @param ${instanceName}
-	* @throws Exception
 	* @return ResultVO<${entityName}>
 	* @author Created by ${author} on ${now}
 	*/
 	@ReqMethod
-	public ResultVO<${entityName}> add${entityName}(${entityName} ${instanceName}) throws Exception {
+	public ResultVO<${entityName}> add${entityName}(${entityName} ${instanceName}) {
 		ResultVO<${entityName}> result = new ResultVO<${entityName}>();
 			try {
 				int flag = ${instanceName}Service.add${entityName}(${instanceName});
@@ -89,11 +86,11 @@ public class ${entityName}Controller {
 			} catch(BssException e) {
 				result.setResultCode(ErrorConsts.UN_ERROR.errorCode);
 				result.setResultMsg(e.getFailMsg());
-				zlogger.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), "添加失败！" + e.getMessage(), e);
+				ZLOGGER.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), "添加失败！" + e.getMessage(), e);
 			} catch(Exception e) {
 				result.setResultCode(ErrorConsts.UN_ERROR.errorCode);
 				result.setResultMsg(e.getMessage());
-				zlogger.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), "添加失败！" + e.getMessage(), e);
+				ZLOGGER.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), "添加失败！" + e.getMessage(), e);
 			}
 			return result;
 	}
@@ -102,12 +99,11 @@ public class ${entityName}Controller {
 	/**
 	* @Description: 修改
 	* @param ${instanceName}
-	* @throws Exception
 	* @return ResultVO<${entityName}>
 	* @author Created by ${author} on ${now}
 	*/
 	@ReqMethod
-	public ResultVO<${entityName}> update${entityName}ById(${entityName} ${instanceName}) throws Exception {
+	public ResultVO<${entityName}> update${entityName}ById(${entityName} ${instanceName}) {
 		ResultVO<${entityName}> result = new ResultVO<${entityName}>();
 			try {
 				int flag = ${instanceName}Service.update${entityName}ById(${instanceName});
@@ -121,11 +117,11 @@ public class ${entityName}Controller {
 			} catch(BssException e) {
 				result.setResultCode(ErrorConsts.UN_ERROR.errorCode);
 				result.setResultMsg(e.getFailMsg());
-				zlogger.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), "修改失败！" + e.getMessage(), e);
+				ZLOGGER.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), "修改失败！" + e.getMessage(), e);
 			} catch(Exception e) {
 				result.setResultCode(ErrorConsts.UN_ERROR.errorCode);
 				result.setResultMsg(e.getMessage());
-				zlogger.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), "修改失败！" + e.getMessage(), e);
+				ZLOGGER.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), "修改失败！" + e.getMessage(), e);
 			}
 			return result;
 			}
@@ -133,12 +129,11 @@ public class ${entityName}Controller {
 	/**
 	* @Description: 删除
 	* @param ${instanceName}
-	* @throws Exception
 	* @return ResultVO<${entityName}>
 	* @author Created by ${author} on ${now}
 	*/
 	@ReqMethod
-	public ResultVO<${entityName}>  remove${entityName}ById(${entityName} ${instanceName}) throws Exception {
+	public ResultVO<${entityName}>  remove${entityName}ById(${entityName} ${instanceName}) {
 		ResultVO<${entityName}> result = new ResultVO<${entityName}>();
 			try {
 				int flag = ${instanceName}Service.remove${entityName}ById(${instanceName});
@@ -152,11 +147,11 @@ public class ${entityName}Controller {
 			} catch(BssException e) {
 				result.setResultCode(ErrorConsts.UN_ERROR.errorCode);
 				result.setResultMsg(e.getFailMsg());
-				zlogger.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), "刪除失败！" + e.getMessage(), e);
+				ZLOGGER.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), "刪除失败！" + e.getMessage(), e);
 			} catch(Exception e) {
 				result.setResultCode(ErrorConsts.UN_ERROR.errorCode);
 				result.setResultMsg(e.getMessage());
-				zlogger.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), "刪除失败！" + e.getMessage(), e);
+				ZLOGGER.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), "刪除失败！" + e.getMessage(), e);
 			}
 			return result;
 	}

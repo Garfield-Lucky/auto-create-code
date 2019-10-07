@@ -16,11 +16,10 @@ public interface ${entityName}Bo {
 	/**
 	* @Description:
 	* @param ${instanceName}
-	* @throws Exception
 	* @return PageInfo<${entityName}>
     * @author Created by ${author} on ${now}
     */
-    PageInfo<${entityName}> qry${entityName}List(Map<String, Object> params) throws Exception;
+    PageInfo<${entityName}> qry${entityName}List(Map<String, Object> params);
 
     /**
     * @Description: 通过id查询
@@ -28,7 +27,7 @@ public interface ${entityName}Bo {
     * @return ${entityName}
     * @author Created by ${author} on ${now}
     */
-    ${entityName} qry${entityName}ById(${entityName} ${instanceName}) throws Exception;
+    ${entityName} qry${entityName}ById(${entityName} ${instanceName});
 
     /**
     * @Description: 修改
@@ -36,7 +35,7 @@ public interface ${entityName}Bo {
     * @return int
     * @author Created by ${author} on ${now}
     */
-    int update${entityName}ById(${entityName} ${instanceName}) throws Exception;
+    int update${entityName}ById(${entityName} ${instanceName});
 
     /**
     * @Description: 根据id删除
@@ -44,7 +43,7 @@ public interface ${entityName}Bo {
     * @return int
     * @author Created by ${author} on ${now}
     */
-    int remove${entityName}ById(${entityName} ${instanceName}) throws Exception;
+    int remove${entityName}ById(${entityName} ${instanceName});
 
     /**
     * @Description: 新增
@@ -52,7 +51,7 @@ public interface ${entityName}Bo {
     * @return int
     * @author Created by ${author} on ${now}
     */
-    int add${entityName}(${entityName} ${instanceName}) throws Exception;
+    int add${entityName}(${entityName} ${instanceName});
 
 
 

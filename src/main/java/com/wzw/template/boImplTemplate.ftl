@@ -42,7 +42,7 @@ public class ${entityName}BoImpl implements ${entityName}Bo {
 			resultData = ${instanceName}Mapper.qry${entityName}List(params);
 		} catch(Exception e) {
 			LOG.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), e.getMessage());
-			throw new BssException(logModule, ErrorConsts.UN_BUSINESS_ERROR.errorCode, "查询列表失败");
+			throw new BssException(logModule, ErrorConsts.UN_BUSINESS_ERROR.errorCode, "查询列表失败", e);
 		}
 		return new PageInfo<${entityName}>(resultData);
 	}
@@ -54,7 +54,7 @@ public class ${entityName}BoImpl implements ${entityName}Bo {
 			resultData = ${instanceName}Mapper.selectByPrimaryKey(${instanceName}.get${entityName}Id());
 		} catch(Exception e) {
 			LOG.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), e.getMessage());
-			throw new BssException(logModule, ErrorConsts.UN_BUSINESS_ERROR.errorCode, "查询失败");
+			throw new BssException(logModule, ErrorConsts.UN_BUSINESS_ERROR.errorCode, "查询失败", e);
 		}
 		return resultData;
 	}
@@ -69,10 +69,10 @@ public class ${entityName}BoImpl implements ${entityName}Bo {
 			flag = ${instanceName}Mapper.updateByPrimaryKeySelective(${instanceName});
 		} catch(BssException e) {
 			LOG.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), e.getFailMsg());
-		throw new BssException(logModule, ErrorConsts.UN_BUSINESS_ERROR.errorCode, e.getFailMsg());
+		throw new BssException(logModule, ErrorConsts.UN_BUSINESS_ERROR.errorCode, e.getFailMsg(), e);
 		} catch(Exception e) {
 			LOG.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), e.getMessage());
-			throw new BssException(logModule, ErrorConsts.UN_BUSINESS_ERROR.errorCode, e.getMessage());
+			throw new BssException(logModule, ErrorConsts.UN_BUSINESS_ERROR.errorCode, e.getMessage(), e);
 		}
 		return flag;
 	}
@@ -84,7 +84,7 @@ public class ${entityName}BoImpl implements ${entityName}Bo {
 			flag = ${instanceName}Mapper.deleteByPrimaryKey(${instanceName}.get${entityName}Id());
 		} catch(Exception e) {
 			LOG.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), e.getMessage());
-			throw new BssException(logModule, ErrorConsts.UN_BUSINESS_ERROR.errorCode, "删除失败");
+			throw new BssException(logModule, ErrorConsts.UN_BUSINESS_ERROR.errorCode, "删除失败", e);
 		}
 		return flag;
 	}
@@ -99,10 +99,10 @@ public class ${entityName}BoImpl implements ${entityName}Bo {
 			flag = ${instanceName}Mapper.insertSelective(${instanceName});
 		} catch(BssException e) {
 			LOG.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), e.getFailMsg());
-			throw new BssException(logModule, ErrorConsts.UN_BUSINESS_ERROR.errorCode, e.getFailMsg());
+			throw new BssException(logModule, ErrorConsts.UN_BUSINESS_ERROR.errorCode, e.getFailMsg(), e);
 		} catch(Exception e) {
 			LOG.error(new ErrorCode(ErrorConsts.UN_ERROR.errorCode), e.getMessage());
-			throw new BssException(logModule, ErrorConsts.UN_BUSINESS_ERROR.errorCode, e.getMessage());
+			throw new BssException(logModule, ErrorConsts.UN_BUSINESS_ERROR.errorCode, e.getMessage(), e);
 		}
 		return flag;
 

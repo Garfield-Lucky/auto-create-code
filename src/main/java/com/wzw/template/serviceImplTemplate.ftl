@@ -21,27 +21,27 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
 	${entityName}Bo ${instanceName}Bo;
 
 	@Override
-	public PageInfo<${entityName}> qry${entityName}List(Map<String, Object> params) throws Exception {
+	public PageInfo<${entityName}> qry${entityName}List(Map<String, Object> params) {
     	return ${instanceName}Bo.qry${entityName}List(params);
     }
 
     @Override
-    public ${entityName} qry${entityName}ById(${entityName} ${instanceName}) throws Exception {
+    public ${entityName} qry${entityName}ById(${entityName} ${instanceName}) {
     	return ${instanceName}Bo.qry${entityName}ById(${instanceName});
     }
 
     @Override
-    public int update${entityName}ById(${entityName} ${instanceName}) throws Exception {
+    public int update${entityName}ById(${entityName} ${instanceName}) {
     	return ${instanceName}Bo.update${entityName}ById(${instanceName});
     }
 
     @Override
-    public int remove${entityName}ById(${entityName} ${instanceName}) throws Exception {
+    public int remove${entityName}ById(${entityName} ${instanceName}) {
     	return ${instanceName}Bo.remove${entityName}ById(${instanceName});
     }
 
     @Override
-    public int add${entityName}(${entityName} ${instanceName}) throws Exception {
+    public int add${entityName}(${entityName} ${instanceName}) {
     	return ${instanceName}Bo.add${entityName}(${instanceName});
     }
 
