@@ -1,7 +1,6 @@
 package ${package}.service;
 
 import com.github.pagehelper.PageInfo;
-import java.util.List;
 import java.util.Map;
 import ${package}.entity.${entityName};
 
@@ -13,11 +12,11 @@ import ${package}.entity.${entityName};
 */
 public interface ${entityName}Service {
 
-	/**
-	* @Description: 列表查询
-	* @param Map<String,Object> params
-	* @throws Exception
-	* @return PageInfo<${entityName}>
+    /**
+    * @Description: 列表查询
+    * @param Map<String,Object> params
+    * @throws Exception
+    * @return PageInfo<${entityName}>
     * @author Created by ${author} on ${now}
     */
     PageInfo<${entityName}>  qry${entityName}List(Map<String, Object> params);

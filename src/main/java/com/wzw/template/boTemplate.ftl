@@ -1,7 +1,6 @@
 package ${package}.bo;
 
 import com.github.pagehelper.PageInfo;
-import java.util.List;
 import java.util.Map;
 import ${package}.entity.${entityName};
 
@@ -13,10 +12,10 @@ import ${package}.entity.${entityName};
 */
 public interface ${entityName}Bo {
 
-	/**
-	* @Description:
-	* @param ${instanceName}
-	* @return PageInfo<${entityName}>
+    /**
+    * @Description:
+    * @param ${instanceName}
+    * @return PageInfo<${entityName}>
     * @author Created by ${author} on ${now}
     */
     PageInfo<${entityName}> qry${entityName}List(Map<String, Object> params);
