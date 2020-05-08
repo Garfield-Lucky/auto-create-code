@@ -27,7 +27,7 @@ import com.ztesoft.common.logger.factory.ZLoggerFactory;
 @Service("${instanceName}Bo")
 public class ${entityName}BoImpl implements ${entityName}Bo {
 
-    private static ZLogger LOG = ZLoggerFactory.getLogger(${entityName}BoImpl.class, "${entityName}Bo");
+    private static ZLogger zlogger = ZLoggerFactory.getLogger(${entityName}BoImpl.class, "${entityName}Bo");
 
     private static final String LOG_MODULE = "${entityName}Bo";
 
